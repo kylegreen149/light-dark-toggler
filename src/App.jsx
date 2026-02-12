@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [isDark, setIsDark] = useState(false)
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light")
 
-  const toggleDarkMode = () => {
-    if (!isDark) {
-      setIsDark(true)
-      setTheme("dark")
-    } else {
-      setIsDark(false)
-      setTheme("light")
-    }
-  }
+  const toggleDarkMode = () => setTheme(theme === "light" ? "dark" : "light")
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+    // console.log(theme)
+  }, [theme])
 
   return (
     <div className={theme}>
